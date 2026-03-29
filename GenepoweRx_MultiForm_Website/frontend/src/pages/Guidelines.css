@@ -1,0 +1,14 @@
+.guidelines { max-width: 1100px; }
+.gl-header { display:flex; align-items:center; gap:20px; margin-bottom:24px; background:#fff; border:1px solid var(--card-border); border-radius:var(--radius-lg); padding:20px 24px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+.gl-logo { height:48px; width:auto; object-fit:contain; }
+.gl-tabs { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px; }
+.gl-tab { padding:9px 18px; background:#fff; border:1.5px solid var(--card-border); border-radius:8px; color:var(--text-secondary); font-size:13px; font-weight:600; font-family:var(--font-body); cursor:pointer; transition:all 0.2s; }
+.gl-tab:hover { border-color:#5B3FA6; color:#5B3FA6; background:#f8f4ff; }
+.gl-tab.active { background:#5B3FA6; color:#fff; border-color:#5B3FA6; }
+.gl-content { display:flex; flex-direction:column; gap:14px; }
+.gl-card { display:flex; gap:16px; background:#fff; border:1px solid var(--card-border); border-radius:var(--radius-lg); padding:20px; box-shadow:0 2px 6px rgba(0,0,0,0.04); transition:box-shadow 0.2s; }
+.gl-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+.gl-card-icon { font-size:28px; flex-shrink:0; width:44px; text-align:center; }
+.gl-card-body { flex:1; }
+.gl-card-title { font-size:15px; font-weight:700; color:var(--text-primary); margin-bottom:8px; }
+.gl-card-text { font-size:13px; color:var(--text-secondary); line-height:1.75; white-space:pre-wrap; font-family:var(--font-body); margin:0; }

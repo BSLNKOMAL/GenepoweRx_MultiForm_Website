@@ -1,0 +1,17 @@
+.revisit-banner {
+  display:flex; align-items:flex-start; gap:14px;
+  border-radius:var(--radius); padding:14px 18px;
+  margin-bottom:20px; border:1.5px solid;
+}
+.revisit-banner.revisit { background:#fff8e8; border-color:#f0c040; }
+.revisit-banner.new-patient { background:#edfaf1; border-color:#27ae60; }
+.rb-icon { font-size:22px; flex-shrink:0; padding-top:2px; }
+.revisit-banner.revisit .rb-icon { color:#e07b00; }
+.revisit-banner.new-patient .rb-icon { color:#27ae60; }
+.rb-content { flex:1; }
+.rb-title { font-size:14px; font-weight:700; color:var(--text-primary); margin-bottom:6px; }
+.rb-meta { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:6px; }
+.rb-pid { font-family:var(--font-mono); font-size:13px; font-weight:700; color:#E8611A; background:rgba(232,97,26,0.1); padding:2px 8px; border-radius:4px; }
+.rb-name { font-size:13px; color:var(--text-secondary); }
+.rb-visit { font-size:12px; font-weight:600; color:#5B3FA6; background:rgba(91,63,166,0.1); padding:2px 8px; border-radius:4px; }
+.rb-note { font-size:12px; color:#856404; line-height:1.5; }

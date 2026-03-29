@@ -1,0 +1,8 @@
+.forms-hub { max-width: 1100px; }
+.forms-hub-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(310px, 1fr)); gap:18px; }
+.form-hub-card { background:#ffffff; border:1.5px solid var(--card-border); border-top:3px solid var(--fc); border-radius:var(--radius-lg); padding:24px; cursor:pointer; transition:all 0.2s; display:flex; flex-direction:column; gap:10px; box-shadow:0 2px 8px rgba(0,77,120,0.04); }
+.form-hub-card:hover { transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--fc); }
+.fhc-tag { font-size:11px; font-family:var(--font-mono); font-weight:700; color:var(--fc); background:color-mix(in srgb,var(--fc) 10%,transparent); padding:4px 10px; border-radius:5px; width:fit-content; }
+.fhc-title { font-size:16px; font-weight:700; color:var(--text-primary); }
+.fhc-desc { font-size:13px; color:var(--text-secondary); line-height:1.55; flex:1; }
+.fhc-action { display:flex; align-items:center; gap:6px; color:var(--fc); font-size:13px; font-weight:600; margin-top:6px; }

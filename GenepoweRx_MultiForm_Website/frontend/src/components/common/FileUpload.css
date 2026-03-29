@@ -1,0 +1,21 @@
+.file-upload-wrap { margin-top:4px; }
+.fu-label { font-size:12px; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:8px; }
+.fu-dropzone {
+  border:2px dashed var(--input-border); border-radius:10px;
+  padding:24px; text-align:center; cursor:pointer;
+  background:#f8fafc; transition:all 0.2s;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+}
+.fu-dropzone:hover, .fu-dropzone.dragging { border-color:#5B3FA6; background:rgba(91,63,166,0.04); }
+.fu-upload-icon { font-size:28px; color:var(--text-muted); }
+.fu-text { font-size:14px; font-weight:600; color:var(--text-secondary); }
+.fu-subtext { font-size:12px; color:var(--text-muted); }
+.fu-files-list { display:flex; flex-direction:column; gap:6px; margin-top:10px; }
+.fu-file-item { display:flex; align-items:center; gap:8px; padding:8px 12px; background:#fff; border:1px solid var(--card-border); border-radius:8px; }
+.fu-file-icon { font-size:16px; color:#5B3FA6; flex-shrink:0; }
+.fu-file-name { flex:1; font-size:13px; color:var(--text-primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.fu-file-size { font-size:11px; color:var(--text-muted); font-family:var(--font-mono); flex-shrink:0; }
+.fu-file-check { font-size:14px; color:#27ae60; flex-shrink:0; }
+.fu-remove-btn { background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:15px; padding:2px; border-radius:4px; transition:color 0.15s; flex-shrink:0; }
+.fu-remove-btn:hover { color:#d62839; }
+.fu-hint { font-size:11px; color:var(--text-muted); margin-top:6px; }
