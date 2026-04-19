@@ -11,7 +11,7 @@ connectDB();
 // ── CORS — allow Vercel frontend + localhost dev ──────────────────
 const allowedOrigins = [
   process.env.CLIENT_URL,
-  'http://localhost:3000',
+  'http://localhost:3001',
   'https://genepowe-rx-multi-form-website.vercel.app',
 ].filter(Boolean);
 
