@@ -56,11 +56,11 @@ exports.getAnalytics = async (req, res) => {
       FormSubmission.find().sort({ submittedAt: -1 }).limit(5).populate('patient','name patientId')
     ]);
 
-    // Aggregations - optimize with maxTimeMS
+    // Aggregations - optimize with allowDiskUse
     const [formStats, genderStats] = await Promise.all([
       FormSubmission.aggregate([
         { $group: { _id: '$formType', count: { $sum: 1 } } }
-      ]).allowDiskUse(true).hint({ formType: 1 }).exec(),
+      ]).allowDiskUse(true).exec(),
       Patient.aggregate([
         { $group: { _id: '$gender', count: { $sum: 1 } } }
       ]).allowDiskUse(true).exec()
