@@ -48,37 +48,59 @@ exports.getAllPatients = async (req, res) => {
 
 exports.getAnalytics = async (req, res) => {
   try {
-    const [totalPatients, totalForms, totalDrafts, formStats, recentSubmissions, genderDist] = await Promise.all([
+    // Simple counts - these are fast
+    const [totalPatients, totalForms, totalDrafts, recentSubmissions] = await Promise.all([
       Patient.countDocuments(),
       FormSubmission.countDocuments(),
       Draft.countDocuments({ isSubmitted: false }),
-      FormSubmission.aggregate([
-        { $facet: {
-          byType: [{ $group: { _id: '$formType', count: { $sum: 1 } } }],
-          monthlyTrend: [
-            { $group: { _id: { year: { $year: '$submittedAt' }, month: { $month: '$submittedAt' } }, count: { $sum: 1 } } },
-            { $sort: { '_id.year': 1, '_id.month': 1 } },
-            { $limit: 12 }
-          ]
-        }}
-      ]),
-      FormSubmission.find().sort({ submittedAt: -1 }).limit(5).populate('patient','name patientId'),
-      Patient.aggregate([{ $group: { _id: '$gender', count: { $sum: 1 } } }])
+      FormSubmission.find().sort({ submittedAt: -1 }).limit(5).populate('patient','name patientId')
     ]);
-    
+
+    // Aggregations - optimize with maxTimeMS
+    const [formStats, genderStats] = await Promise.all([
+      FormSubmission.aggregate([
+        { $group: { _id: '$formType', count: { $sum: 1 } } }
+      ]).allowDiskUse(true).hint({ formType: 1 }).exec(),
+      Patient.aggregate([
+        { $group: { _id: '$gender', count: { $sum: 1 } } }
+      ]).allowDiskUse(true).exec()
+    ]);
+
+    // Monthly trend - separate aggregation
+    const monthlyData = await FormSubmission.aggregate([
+      { $group: { 
+        _id: { 
+          year: { $year: '$submittedAt' }, 
+          month: { $month: '$submittedAt' } 
+        }, 
+        count: { $sum: 1 } 
+      }},
+      { $sort: { '_id.year': 1, '_id.month': 1 } },
+      { $limit: 12 }
+    ]).allowDiskUse(true).exec();
+
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    
     res.json({
       success: true,
       data: {
-        stats: { totalPatients, totalForms, totalDrafts, completionRate: totalForms > 0 ? Math.round((totalForms/(totalForms+totalDrafts))*100) : 0 },
-        formsByType: formStats[0]?.byType?.map(f => ({ name: f._id, value: f.count })) || [],
+        stats: { 
+          totalPatients, 
+          totalForms, 
+          totalDrafts, 
+          completionRate: totalForms > 0 ? Math.round((totalForms/(totalForms+totalDrafts))*100) : 0 
+        },
+        formsByType: formStats.map(f => ({ name: f._id, value: f.count })),
         recentSubmissions,
-        genderDist: genderDist.map(g => ({ name: g._id||'Unknown', value: g.count })),
-        monthlyTrend: formStats[0]?.monthlyTrend?.map(d => ({ month: months[d._id.month-1]+' '+d._id.year, submissions: d.count })) || []
+        genderDist: genderStats.map(g => ({ name: g._id||'Unknown', value: g.count })),
+        monthlyTrend: monthlyData.map(d => ({ 
+          month: months[d._id.month-1]+' '+d._id.year, 
+          submissions: d.count 
+        }))
       }
     });
   } catch (error) {
-    console.error('Analytics error:', error);
+    console.error('❌ Analytics error:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
